@@ -62,3 +62,12 @@ button {
   height: auto;
   color: black;
 }
+
+.operator {
+  background-color: rgb(175, 175, 175);
+}
+
+.hl {
+  border: 2px solid rgb(61, 61, 226);
+  transition: all 0.07s ease;
+}
