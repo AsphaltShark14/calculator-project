@@ -21,10 +21,12 @@ function enterInput(e) {
         input = e.target.dataset.key;
         screen.textContent = input;
     }
+
+    lastInput = parseFloat(input);
 }
 
 function operateInput(e) {
-    resultsArray.push(parseFloat(input));
+    resultsArray.length == 2 ? resultsArray = [input] : resultsArray.push(parseFloat(input));
     
     if (!resultDisplayed) {
         this.classList.add('hl');
@@ -36,19 +38,16 @@ function operateInput(e) {
 
     if (resultsArray.length == 2) {
         resultEqual();
-        resultsArray.push(parseFloat(input));
     }
 
     lastOperator = e.target.dataset.key;
     lastButton = this;
-    lastInput = parseFloat(input);
 }
 
 function resultEqual() {
-   if (!lastOperator) return;
-    resultsArray.push(parseFloat(input));
-    console.log(input, resultsArray);
-    
+    if (!lastOperator) return;
+    resultsArray.length >= 2 ? resultsArray = [input,lastInput] : resultsArray.push(parseFloat(input));
+
     switch (lastOperator) {
         case ('+'):
             input = resultsArray[0] + resultsArray[1];
@@ -64,13 +63,12 @@ function resultEqual() {
             break;
     }
 
+
     if (input === Infinity) {
                 input = "ERROR";
             }
 
     screen.textContent = input;
-    resultsArray = [input, lastInput];
-
 }
 
 function clearInput() {
@@ -78,6 +76,7 @@ function clearInput() {
     screen.textContent = "";
     lastOperator = "";
     if (lastButton) lastButton.classList.remove('hl');
+    resultsArray = [];
 }
 
 clear.addEventListener('click', clearInput);
